@@ -22,9 +22,9 @@
         "name": "electrovir",
         "url": "https://github.com/electrovir"
     },
-    "main": "dist/index.js",
-    "types": "dist/index.d.ts",
-    "bin": "dist/cli.js",
+    "main": "dist/api/api.js",
+    "types": "dist/api/api.d.ts",
+    "bin": "dist/cli/cli.js",
     "scripts": {
         "compile": "rm -rf dist && virmator compile",
         "docs:check": "virmator code-in-markdown check",
@@ -41,13 +41,13 @@
         "test:types": "tsc --noEmit"
     },
     "dependencies": {
-        "@augment-vir/common": "^12.7.0",
-        "@augment-vir/node-js": "^12.7.0",
+        "@augment-vir/common": "^12.8.0",
+        "@augment-vir/node-js": "^12.8.0",
         "@types/node": "^18.13.0",
         "fs-extra": "^11.1.0"
     },
     "devDependencies": {
-        "@augment-vir/chai": "^12.7.0",
+        "@augment-vir/chai": "^12.8.0",
         "@electrovir/nyc": "^15.1.0-fix0",
         "@istanbuljs/nyc-config-typescript": "^1.0.2",
         "@types/chai": "^4.3.4",
