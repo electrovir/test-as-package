@@ -1,0 +1,11 @@
+{
+    "name": "multiple-bins-fake-package",
+    "version": "0.0.0",
+    "private": true,
+    "main": "dist/index.js",
+    "bin": {
+        "bin1": "dist/index.js",
+        "bin2": "dist/index.js"
+    },
+    "scripts": {}
+}
