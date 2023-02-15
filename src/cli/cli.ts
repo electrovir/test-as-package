@@ -56,3 +56,7 @@ async function cli() {
         },
     });
 }
+
+if (require.main === module) {
+    cli();
+}
