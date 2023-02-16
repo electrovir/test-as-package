@@ -13,7 +13,7 @@
             "TEST-AS-PACKAGE-INSTALLATION-BIN-DIR-PATH": "\"./test-files/full-package/node_modules/.bin\""
         }
     },
-    "runCurrentPackageCli": {
+    "runPackageCli": {
         "runs the package when args are not provided": {
             "TEST-AS-PACKAGE-BIN-NAMES": "[\"full-package\"]",
             "TEST-AS-PACKAGE-INSTALLATION-BIN-DIR-PATH": "\"./test-files/full-package/node_modules/.bin\"",

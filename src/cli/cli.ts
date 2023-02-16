@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-import {mapObjectValues} from '@augment-vir/common';
+import {mapObjectValues, PartialAndUndefined} from '@augment-vir/common';
 import {runShellCommand} from '@augment-vir/node-js';
 import {join} from 'path';
 import {
@@ -10,7 +10,7 @@ import {
 import {testAsPackageBinName} from '../test-as-package-bin-name';
 import {extractBinNames} from './extract-bin-names';
 import {packPackage} from './pack-package';
-import {installTar} from './package-installation';
+import {installTar, uninstallSelf} from './package-installation';
 
 const flags = ['--bypass-install'];
 
@@ -52,7 +52,15 @@ async function makeBinsExecutable(binVars: BinEnvVars) {
     );
 }
 
-export async function cli(repoDirPath = process.cwd(), args = process.argv) {
+export async function cli({
+    cwd: repoDirPath = process.cwd(),
+    args = process.argv,
+    skipUninstall = false,
+}: PartialAndUndefined<{
+    cwd: string;
+    args: string[];
+    skipUninstall: boolean;
+}> = {}) {
     const {testCommand, flags} = extractCommandAndFlags(args);
     const tarPath = await packPackage(repoDirPath);
     if (!flags.bypassInstall) {
@@ -78,6 +86,10 @@ export async function cli(repoDirPath = process.cwd(), args = process.argv) {
             cwd: repoDirPath,
             rejectOnError: true,
         });
+    }
+
+    if (!skipUninstall) {
+        await uninstallSelf(repoDirPath);
     }
 
     return jsonNewEnv;

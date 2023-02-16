@@ -5,7 +5,7 @@ import chaiAsPromised from 'chai-as-promised';
 import {expectationCases} from 'test-established-expectations';
 import {cli} from '../cli/cli';
 import {repoRootDirPath, testRepoDirPaths} from '../test-file-paths.test-helper';
-import {runCurrentPackageCli} from './run-package';
+import {runPackageCli} from './run-package';
 
 function sanitizeOutput<OutputGeneric extends object>(output: OutputGeneric): OutputGeneric {
     return mapObjectValues(output, (key, value) => {
@@ -17,12 +17,14 @@ function sanitizeOutput<OutputGeneric extends object>(output: OutputGeneric): Ou
     }) as OutputGeneric;
 }
 
-async function testRunCurrentPackageCli(
-    inputs: NonNullable<Parameters<typeof runCurrentPackageCli>[0]>,
-) {
-    const envVariables = await cli(inputs.cwd, ['test-as-package']);
+async function testRunCurrentPackageCli(inputs: NonNullable<Parameters<typeof runPackageCli>[0]>) {
+    const envVariables = await cli({
+        args: ['test-as-package'],
+        cwd: inputs.cwd,
+        skipUninstall: true,
+    });
     Object.assign(process.env, envVariables);
-    const packageRunOutput: Partial<ShellOutput> = await runCurrentPackageCli(inputs);
+    const packageRunOutput: Partial<ShellOutput> = await runPackageCli(inputs);
 
     delete packageRunOutput.error;
 
@@ -34,16 +36,16 @@ async function testRunCurrentPackageCli(
     return sanitizedOutput;
 }
 
-describe(runCurrentPackageCli.name, () => {
+describe(runPackageCli.name, () => {
     it('errors if no env variables were set', async () => {
         chai.use(chaiAsPromised);
-        await assert.isRejected(runCurrentPackageCli());
+        await assert.isRejected(runPackageCli());
     });
 
     expectationCases(
         testRunCurrentPackageCli,
         {
-            testKey: runCurrentPackageCli.name,
+            testKey: runPackageCli.name,
         },
         [
             {

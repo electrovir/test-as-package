@@ -14,7 +14,7 @@ export type RunPackageCliInputs = Partial<
     } & RunShellCommandParams
 >;
 
-export async function runCurrentPackageCli(
+export async function runPackageCli(
     options: RunPackageCliInputs = {
         commandArgs: [],
     },

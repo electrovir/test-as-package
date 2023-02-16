@@ -12,8 +12,14 @@ function sanitizeOutput(output: Awaited<ReturnType<typeof cli>>): Awaited<Return
     };
 }
 
-async function testCli(input: Parameters<typeof cli>[0]) {
-    const rawOutput = await cli(input, ['test-as-package']);
+async function testCli(cwd: NonNullable<Parameters<typeof cli>[0]>['cwd']) {
+    const rawOutput = await cli({
+        cwd,
+        args: [
+            'test-as-package',
+        ],
+        skipUninstall: true,
+    });
     const sanitizedOutput = sanitizeOutput(rawOutput);
     return sanitizedOutput;
 }
