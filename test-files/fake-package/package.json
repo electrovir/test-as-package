@@ -3,5 +3,7 @@
     "version": "0.0.0",
     "private": true,
     "main": "dist/index.js",
-    "scripts": {}
+    "scripts": {
+        "prepack": "rm -f tsconfig.tsbuildinfo && rm -rf dist && tsc"
+    }
 }

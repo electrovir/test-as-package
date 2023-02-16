@@ -2,15 +2,24 @@
     "testCli": {
         "sets env variables": {
             "TEST-AS-PACKAGE-BIN-NAMES": "[]",
-            "TEST-AS-PACKAGE-INSTALLATION-BIN-DIR-PATH": "./test-files/fake-package/node_modules/.bin"
+            "TEST-AS-PACKAGE-INSTALLATION-BIN-DIR-PATH": "\"./test-files/fake-package/node_modules/.bin\""
         },
         "sets multiple bin env variables": {
             "TEST-AS-PACKAGE-BIN-NAMES": "[\"bin1\",\"bin2\"]",
-            "TEST-AS-PACKAGE-INSTALLATION-BIN-DIR-PATH": "./test-files/multiple-bins-fake-package/node_modules/.bin"
+            "TEST-AS-PACKAGE-INSTALLATION-BIN-DIR-PATH": "\"./test-files/multiple-bins-fake-package/node_modules/.bin\""
         },
         "sets full package's env variables": {
             "TEST-AS-PACKAGE-BIN-NAMES": "[\"full-package\"]",
-            "TEST-AS-PACKAGE-INSTALLATION-BIN-DIR-PATH": "./test-files/full-package/node_modules/.bin"
+            "TEST-AS-PACKAGE-INSTALLATION-BIN-DIR-PATH": "\"./test-files/full-package/node_modules/.bin\""
+        }
+    },
+    "runCurrentPackage": {
+        "runs the package when args are not provided": {
+            "TEST-AS-PACKAGE-BIN-NAMES": "[\"full-package\"]",
+            "TEST-AS-PACKAGE-INSTALLATION-BIN-DIR-PATH": "\"./test-files/full-package/node_modules/.bin\"",
+            "stdout": "[]\n",
+            "stderr": "",
+            "exitCode": 0
         }
     }
 }

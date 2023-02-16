@@ -1,0 +1,12 @@
+{
+    "compilerOptions": {
+        "outDir": "./dist",
+        "rootDir": "./src"
+    },
+    "exclude": [
+        "./configs/",
+        "./dist/",
+        "./node_modules/",
+        "./test-files/"
+    ]
+}

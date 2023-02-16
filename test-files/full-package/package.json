@@ -4,5 +4,7 @@
     "private": true,
     "main": "dist/index.js",
     "bin": "dist/index.js",
-    "scripts": {}
+    "scripts": {
+        "prepack": "rm -f tsconfig.tsbuildinfo && rm -rf dist && tsc"
+    }
 }

@@ -1,3 +1,6 @@
+#!/usr/bin/env node
+
+import {mapObjectValues} from '@augment-vir/common';
 import {runShellCommand} from '@augment-vir/node-js';
 import {join} from 'path';
 import {
@@ -31,6 +34,24 @@ function extractCommandAndFlags(args: ReadonlyArray<string>) {
     };
 }
 
+type BinEnvVars = {
+    [packageBeingTestedBinNames]: string[];
+    [packageBeingTestedInstallationBinDirPath]: string;
+};
+
+async function makeBinsExecutable(binVars: BinEnvVars) {
+    const binNames = binVars[packageBeingTestedBinNames];
+
+    await Promise.all(
+        binNames.map(async (binName) => {
+            await runShellCommand(`chmod +x ${binName}`, {
+                cwd: binVars[packageBeingTestedInstallationBinDirPath],
+                rejectOnError: true,
+            });
+        }),
+    );
+}
+
 export async function cli(repoDirPath = process.cwd(), args = process.argv) {
     const {testCommand, flags} = extractCommandAndFlags(args);
     const tarPath = await packPackage(repoDirPath);
@@ -41,14 +62,16 @@ export async function cli(repoDirPath = process.cwd(), args = process.argv) {
         });
     }
 
-    const binDirPath = join(repoDirPath, 'node_modules', '.bin');
-
-    const newEnv = {
-        [packageBeingTestedBinNames]: JSON.stringify(await extractBinNames(repoDirPath)),
-        [packageBeingTestedInstallationBinDirPath]: binDirPath,
+    const newEnv: BinEnvVars = {
+        [packageBeingTestedBinNames]: await extractBinNames(repoDirPath),
+        [packageBeingTestedInstallationBinDirPath]: join(repoDirPath, 'node_modules', '.bin'),
     };
 
-    Object.assign(process.env, newEnv);
+    await makeBinsExecutable(newEnv);
+
+    const jsonNewEnv = mapObjectValues(newEnv, (key, value) => JSON.stringify(value));
+
+    Object.assign(process.env, jsonNewEnv);
 
     if (testCommand) {
         await runShellCommand(testCommand, {
@@ -57,7 +80,7 @@ export async function cli(repoDirPath = process.cwd(), args = process.argv) {
         });
     }
 
-    return newEnv;
+    return jsonNewEnv;
 }
 
 if (require.main === module) {

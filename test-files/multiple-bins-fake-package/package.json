@@ -7,5 +7,7 @@
         "bin1": "dist/index.js",
         "bin2": "dist/index.js"
     },
-    "scripts": {}
+    "scripts": {
+        "prepack": "rm -f tsconfig.tsbuildinfo && rm -rf dist && tsc"
+    }
 }

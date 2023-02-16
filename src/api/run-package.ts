@@ -1,38 +1,54 @@
 import {extractErrorMessage, isRuntimeTypeOf, parseJson} from '@augment-vir/common';
 import {runShellCommand, RunShellCommandParams, ShellOutput} from '@augment-vir/node-js';
-import {join} from 'path';
+import {join, relative} from 'path';
 import {
     packageBeingTestedBinNames,
     packageBeingTestedInstallationBinDirPath,
 } from '../package-being-tested-env-names';
 import {testAsPackageBinName} from '../test-as-package-bin-name';
 
-export async function runPackage({
-    executableName,
-    commandArgs,
-    shellCommandOptions,
-}: {
-    executableName?: string | undefined;
-    commandArgs: ReadonlyArray<string>;
-    shellCommandOptions?: RunShellCommandParams | undefined;
-}): Promise<ShellOutput> {
+export async function runCurrentPackage(
+    options: {
+        commandArgs?: ReadonlyArray<string>;
+        executableName?: string | undefined;
+    } & RunShellCommandParams = {
+        commandArgs: [],
+    },
+): Promise<ShellOutput> {
+    const commandArgs = options.commandArgs ?? [];
+    let executableName = options.executableName;
+
     const availableBinNames = readEnvVar(packageBeingTestedBinNames, ['']);
     const binDirPath = readEnvVar(packageBeingTestedInstallationBinDirPath, '');
 
     if (!executableName) {
-        executableName = availableBinNames[0]!;
-    } else if (!availableBinNames.includes(executableName)) {
+        if (availableBinNames.length === 1) {
+            executableName = availableBinNames[0];
+        } else {
+            throw new Error(
+                `Multiple command names are available but none were chosen, please provide a executableName input from the following: ${availableBinNames.join(
+                    ', ',
+                )}`,
+            );
+        }
+    } else if (executableName && !availableBinNames.includes(executableName)) {
         throw new Error(
             `Tried to run package by executable name '${executableName}' but that name does not exist for the tested package.`,
         );
     }
 
+    if (!executableName) {
+        throw new Error(`Got no executable name to test.`);
+    }
+
+    const workingDir = options.cwd || process.cwd();
+
     const fullCommand = [
-        join(binDirPath, executableName),
+        './' + relative(workingDir, join(binDirPath, executableName)),
         ...commandArgs,
     ].join(' ');
 
-    const shellOutput = await runShellCommand(fullCommand, shellCommandOptions);
+    const shellOutput = await runShellCommand(fullCommand, options);
     return shellOutput;
 }
 
@@ -40,15 +56,15 @@ function readEnvVar<ReturnGeneric>(
     envVar: typeof packageBeingTestedBinNames | typeof packageBeingTestedInstallationBinDirPath,
     shapeMatcher: ReturnGeneric,
 ): ReturnGeneric {
-    const availableBinNamesRaw = process.env[envVar];
-    const failureMessage = `It should have been set by the '${testAsPackageBinName}' cli. Make sure to use that CLI to run tests.`;
+    const rawEnvValue = process.env[envVar];
+    const failureMessage = `It should have been set by the '${testAsPackageBinName}' cli. Make sure to use that CLI to run tests`;
 
-    if (!availableBinNamesRaw) {
+    if (!rawEnvValue) {
         throw new Error(`Failed to read '${envVar}' env variable: ${failureMessage}`);
     }
 
     const parsedValue = parseJson({
-        jsonString: availableBinNamesRaw,
+        jsonString: rawEnvValue,
         shapeMatcher: shapeMatcher,
         errorHandler: (error) => {
             throw new Error(
