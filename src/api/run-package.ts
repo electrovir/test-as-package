@@ -7,11 +7,15 @@ import {
 } from '../package-being-tested-env-names';
 import {testAsPackageBinName} from '../test-as-package-bin-name';
 
-export async function runCurrentPackage(
-    options: {
+export type RunPackageCliInputs = Partial<
+    {
         commandArgs?: ReadonlyArray<string>;
         executableName?: string | undefined;
-    } & RunShellCommandParams = {
+    } & RunShellCommandParams
+>;
+
+export async function runCurrentPackageCli(
+    options: RunPackageCliInputs = {
         commandArgs: [],
     },
 ): Promise<ShellOutput> {
@@ -45,7 +49,7 @@ export async function runCurrentPackage(
 
     const fullCommand = [
         './' + relative(workingDir, join(binDirPath, executableName)),
-        ...commandArgs,
+        ...commandArgs.map((arg) => `'${arg}'`),
     ].join(' ');
 
     const shellOutput = await runShellCommand(fullCommand, options);

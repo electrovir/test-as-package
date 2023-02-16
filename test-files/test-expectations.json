@@ -13,13 +13,27 @@
             "TEST-AS-PACKAGE-INSTALLATION-BIN-DIR-PATH": "\"./test-files/full-package/node_modules/.bin\""
         }
     },
-    "runCurrentPackage": {
+    "runCurrentPackageCli": {
         "runs the package when args are not provided": {
             "TEST-AS-PACKAGE-BIN-NAMES": "[\"full-package\"]",
             "TEST-AS-PACKAGE-INSTALLATION-BIN-DIR-PATH": "\"./test-files/full-package/node_modules/.bin\"",
             "stdout": "[]\n",
             "stderr": "",
             "exitCode": 0
+        },
+        "runs with arguments": {
+            "TEST-AS-PACKAGE-BIN-NAMES": "[\"full-package\"]",
+            "TEST-AS-PACKAGE-INSTALLATION-BIN-DIR-PATH": "\"./test-files/full-package/node_modules/.bin\"",
+            "stdout": "[ 'hello', 'there', 'there are arguments' ]\n",
+            "stderr": "",
+            "exitCode": 0
+        },
+        "returns errors": {
+            "TEST-AS-PACKAGE-BIN-NAMES": "[\"full-package\"]",
+            "TEST-AS-PACKAGE-INSTALLATION-BIN-DIR-PATH": "\"./test-files/full-package/node_modules/.bin\"",
+            "stdout": "",
+            "stderr": "throw error, this will, throw an error\n",
+            "exitCode": 1
         }
     }
 }
