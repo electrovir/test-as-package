@@ -17,7 +17,7 @@ export async function installTar({
 export async function uninstallSelf(repoDirPath: string): Promise<void> {
     const packageName = await getPackageName(repoDirPath);
 
-    await runShellCommand(`npm uninstall '${packageName}'`, {
+    await runShellCommand(`npm uninstall --no-save '${packageName}'`, {
         cwd: repoDirPath,
         rejectOnError: true,
     });

@@ -41,13 +41,14 @@
         "test:types": "tsc --noEmit"
     },
     "dependencies": {
-        "@augment-vir/common": "^12.8.0",
-        "@augment-vir/node-js": "^12.8.0",
+        "@augment-vir/common": "^12.9.1",
+        "@augment-vir/node-js": "^12.9.1",
         "@types/node": "^18.13.0",
-        "fs-extra": "^11.1.0"
+        "fs-extra": "^11.1.0",
+        "test-established-expectations": "^0.3.0"
     },
     "devDependencies": {
-        "@augment-vir/chai": "^12.8.0",
+        "@augment-vir/chai": "^12.9.1",
         "@electrovir/nyc": "^15.1.0-fix0",
         "@istanbuljs/nyc-config-typescript": "^1.0.2",
         "@types/chai": "^4.3.4",

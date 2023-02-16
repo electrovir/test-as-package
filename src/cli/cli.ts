@@ -18,24 +18,21 @@ function extractFlags(args: ReadonlyArray<string>): {bypassInstall: boolean} {
 function extractCommandAndFlags(args: ReadonlyArray<string>) {
     const testAsPackageIndex = args.indexOf(testAsPackageBinName);
     if (testAsPackageIndex === -1) {
-        throw new Error(
-            `Couldn't find '${testAsPackageBinName}' index in args list: '[${args.join(', ')}]'`,
-        );
+        return {
+            testCommand: '',
+            flags: extractFlags([]),
+        };
     }
     const commandParts = args.slice(testAsPackageIndex + 1).filter((arg) => !flags.includes(arg));
 
     return {
-        command: commandParts.join(' '),
+        testCommand: commandParts.join(' '),
         flags: extractFlags(args),
     };
 }
 
-async function cli() {
-    const repoDirPath = process.cwd();
-
-    const args = process.argv;
-
-    const {command, flags} = extractCommandAndFlags(args);
+export async function cli(repoDirPath = process.cwd(), args = process.argv) {
+    const {testCommand, flags} = extractCommandAndFlags(args);
     const tarPath = await packPackage(repoDirPath);
     if (!flags.bypassInstall) {
         await installTar({
@@ -46,15 +43,21 @@ async function cli() {
 
     const binDirPath = join(repoDirPath, 'node_modules', '.bin');
 
-    await runShellCommand(command, {
-        cwd: repoDirPath,
-        rejectOnError: true,
-        env: {
-            ...process.env,
-            [packageBeingTestedBinNames]: JSON.stringify(await extractBinNames(repoDirPath)),
-            [packageBeingTestedInstallationBinDirPath]: binDirPath,
-        },
-    });
+    const newEnv = {
+        [packageBeingTestedBinNames]: JSON.stringify(await extractBinNames(repoDirPath)),
+        [packageBeingTestedInstallationBinDirPath]: binDirPath,
+    };
+
+    Object.assign(process.env, newEnv);
+
+    if (testCommand) {
+        await runShellCommand(testCommand, {
+            cwd: repoDirPath,
+            rejectOnError: true,
+        });
+    }
+
+    return newEnv;
 }
 
 if (require.main === module) {

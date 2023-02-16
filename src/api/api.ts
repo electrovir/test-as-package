@@ -1,1 +1,1 @@
-export * from './run-package-cli';
+export * from './run-package';

@@ -34,21 +34,22 @@ describe('package-installation', () => {
             const packageTarPath = await packPackage(repoDirPath);
 
             await installTar({tarPath: packageTarPath, repoDirPath});
+            assert.isFalse(existsSync(join(repoDirPath, 'package-lock.json')));
 
             checkNodeModules(true);
         } catch (error) {
         } finally {
             await uninstallSelf(repoDirPath);
-
+            assert.isFalse(existsSync(join(repoDirPath, 'package-lock.json')));
             checkNodeModules(false);
         }
     }
 
     it('installs and uninstalls the tar file', async () => {
-        testTarInstallation(testRepoDirPaths.fakePackage);
+        await testTarInstallation(testRepoDirPaths.fakePackage);
     });
 
     it('installs and uninstalls scoped package tar files', async () => {
-        testTarInstallation(testRepoDirPaths.scopedFakePackage);
+        await testTarInstallation(testRepoDirPaths.scopedFakePackage);
     });
 });

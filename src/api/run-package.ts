@@ -7,7 +7,7 @@ import {
 } from '../package-being-tested-env-names';
 import {testAsPackageBinName} from '../test-as-package-bin-name';
 
-export async function runPackageCli({
+export async function runPackage({
     executableName,
     commandArgs,
     shellCommandOptions,
