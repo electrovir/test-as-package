@@ -1,5 +1,5 @@
-import {mapObjectValues} from '@augment-vir/common';
-import {ShellOutput} from '@augment-vir/node-js';
+import {mapObjectValues, parseJson} from '@augment-vir/common';
+import {ShellOutput, toPosixPath} from '@augment-vir/node-js';
 import chai, {assert} from 'chai';
 import chaiAsPromised from 'chai-as-promised';
 import {expectationCases} from 'test-established-expectations';
@@ -10,10 +10,19 @@ import {runPackageCli} from './run-package';
 function sanitizeOutput<OutputGeneric extends object>(output: OutputGeneric): OutputGeneric {
     return mapObjectValues(output, (key, value) => {
         if (typeof value === 'string') {
-            return value.replaceAll(repoRootDirPath, '.');
-        } else {
-            return value;
+            const parsedValue = parseJson<string | undefined>({
+                jsonString: value,
+                errorHandler: () => {
+                    return undefined;
+                },
+            });
+            if (typeof parsedValue === 'string' && parsedValue) {
+                return JSON.stringify(
+                    toPosixPath(parsedValue).replaceAll(toPosixPath(repoRootDirPath), '.'),
+                );
+            }
         }
+        return value;
     }) as OutputGeneric;
 }
 

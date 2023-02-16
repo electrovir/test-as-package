@@ -1,3 +1,4 @@
+import {toPosixPath} from '@augment-vir/node-js';
 import {expectationCases} from 'test-established-expectations';
 import {packageBeingTestedInstallationBinDirPath} from '../package-being-tested-env-names';
 import {repoRootDirPath, testRepoDirPaths} from '../test-file-paths.test-helper';
@@ -6,9 +7,12 @@ import {cli} from './cli';
 function sanitizeOutput(output: Awaited<ReturnType<typeof cli>>): Awaited<ReturnType<typeof cli>> {
     return {
         ...output,
-        [packageBeingTestedInstallationBinDirPath]: output[
-            packageBeingTestedInstallationBinDirPath
-        ].replace(repoRootDirPath, '.'),
+        [packageBeingTestedInstallationBinDirPath]: JSON.stringify(
+            toPosixPath(JSON.parse(output[packageBeingTestedInstallationBinDirPath])).replaceAll(
+                toPosixPath(repoRootDirPath),
+                '.',
+            ),
+        ),
     };
 }
 

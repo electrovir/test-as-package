@@ -1,5 +1,10 @@
 import {extractErrorMessage, isRuntimeTypeOf, parseJson} from '@augment-vir/common';
-import {runShellCommand, RunShellCommandParams, ShellOutput} from '@augment-vir/node-js';
+import {
+    interpolationSafeWindowsPath,
+    runShellCommand,
+    RunShellCommandParams,
+    ShellOutput,
+} from '@augment-vir/node-js';
 import {join, relative} from 'path';
 import {
     packageBeingTestedBinNames,
@@ -48,7 +53,7 @@ export async function runPackageCli(
     const workingDir = options.cwd || process.cwd();
 
     const fullCommand = [
-        './' + relative(workingDir, join(binDirPath, executableName)),
+        interpolationSafeWindowsPath(relative(workingDir, join(binDirPath, executableName))),
         ...commandArgs.map((arg) => `'${arg}'`),
     ].join(' ');
 
