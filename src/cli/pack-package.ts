@@ -6,6 +6,7 @@ export async function packPackage(packageDirPath: string): Promise<string> {
     const packShellResults = await runShellCommand('npm pack', {
         cwd: packageDirPath,
         rejectOnError: true,
+        hookUpToConsole: true,
     });
 
     const packOutputLines = packShellResults.stdout.trim().split('\n').filter(isTruthy);

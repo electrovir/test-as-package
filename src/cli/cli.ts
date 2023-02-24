@@ -85,6 +85,7 @@ export async function cli({
         await runShellCommand(testCommand, {
             cwd: repoDirPath,
             rejectOnError: true,
+            hookUpToConsole: true,
         });
     }
 

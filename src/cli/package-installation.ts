@@ -11,6 +11,7 @@ export async function installTar({
     await runShellCommand(`npm i -D --no-save '${tarPath}'`, {
         cwd: repoDirPath,
         rejectOnError: true,
+        hookUpToConsole: true,
     });
 }
 
