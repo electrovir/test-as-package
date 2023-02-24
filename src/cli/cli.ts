@@ -19,7 +19,7 @@ function extractFlags(args: ReadonlyArray<string>): {bypassInstall: boolean} {
 }
 
 function extractCommandAndFlags(args: ReadonlyArray<string>) {
-    const testAsPackageIndex = args.indexOf(testAsPackageBinName);
+    const testAsPackageIndex = args.findIndex((arg) => arg.endsWith(testAsPackageBinName));
     if (testAsPackageIndex === -1) {
         return {
             testCommand: '',
