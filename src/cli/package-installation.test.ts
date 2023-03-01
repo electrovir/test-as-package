@@ -1,4 +1,4 @@
-import {replaceWithWindowsPathIfNeeded} from '@augment-vir/node-js';
+import {replaceWithWindowsPathIfNeeded, runShellCommand} from '@augment-vir/node-js';
 import {assert} from 'chai';
 import {existsSync} from 'fs';
 import {join} from 'path';
@@ -51,5 +51,37 @@ describe('package-installation', () => {
 
     it('installs and uninstalls scoped package tar files', async () => {
         await testTarInstallation(testRepoDirPaths.scopedFakePackage);
+    });
+});
+
+async function checkIfSelfIsInstalled(dirPath: string) {
+    const packageName = await getPackageName(dirPath);
+    const output = await runShellCommand(`npm ls ${packageName}`, {
+        cwd: dirPath,
+        rejectOnError: true,
+    });
+
+    return !output.stdout.includes('empty');
+}
+
+describe(uninstallSelf.name, () => {
+    it('does not uninstall if the package actually depends on itself', async () => {
+        // ensure its node_modules has been populated
+        await runShellCommand(`npm pack && npm i`, {
+            cwd: testRepoDirPaths.selfDependent,
+            rejectOnError: true,
+        });
+        const wasInstalledBefore = await checkIfSelfIsInstalled(testRepoDirPaths.selfDependent);
+        await uninstallSelf(testRepoDirPaths.selfDependent);
+        const isInstalledAfter = await checkIfSelfIsInstalled(testRepoDirPaths.selfDependent);
+
+        assert.isTrue(
+            wasInstalledBefore,
+            'self should have been installed the beginning of the test',
+        );
+        assert.isTrue(
+            isInstalledAfter,
+            'self should have been installed still at the end of the test',
+        );
     });
 });

@@ -9,4 +9,5 @@ export const testRepoDirPaths = {
     scopedFakePackage: join(testFilesDirPath, 'scoped-fake-package'),
     multipleBinsFakePackage: join(testFilesDirPath, 'multiple-bins-fake-package'),
     fullPackage: join(testFilesDirPath, 'full-package'),
+    selfDependent: join(testFilesDirPath, 'full-package-that-depends-on-itself'),
 };

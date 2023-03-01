@@ -1,6 +1,6 @@
 {
     "name": "test-as-package",
-    "version": "0.0.2",
+    "version": "0.0.3",
     "description": "Test a repository as an npm package applied to internal test repos.",
     "keywords": [
         "test",
