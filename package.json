@@ -40,18 +40,18 @@
         "test:types": "tsc --noEmit"
     },
     "dependencies": {
-        "@augment-vir/common": "^12.11.2",
-        "@augment-vir/node-js": "^12.11.2",
-        "@types/node": "^18.14.1"
+        "@augment-vir/common": "^12.13.0",
+        "@augment-vir/node-js": "^12.13.0",
+        "@types/node": "^18.14.2"
     },
     "devDependencies": {
-        "@augment-vir/chai": "^12.11.2",
+        "@augment-vir/chai": "^12.13.0",
         "@electrovir/nyc": "^15.1.0-fix0",
         "@istanbuljs/nyc-config-typescript": "^1.0.2",
         "@types/chai": "^4.3.4",
         "@types/mocha": "^10.0.1",
         "chai": "^4.3.7",
-        "cspell": "^6.26.3",
+        "cspell": "^6.27.0",
         "istanbul-smart-text-reporter": "^1.1.1",
         "markdown-code-example-inserter": "^0.3.0",
         "mocha": "^10.2.0",
@@ -66,8 +66,8 @@
         "prettier-plugin-toml": "^0.3.1",
         "test-established-expectations": "^0.3.0",
         "ts-node": "^10.9.1",
-        "type-fest": "^3.6.0",
+        "type-fest": "^3.6.1",
         "typescript": "^4.9.5",
-        "virmator": "^5.5.0"
+        "virmator": "^6.2.0"
     }
 }
