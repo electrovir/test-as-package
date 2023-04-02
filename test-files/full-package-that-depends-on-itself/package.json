@@ -5,7 +5,7 @@
     "main": "dist/index.js",
     "bin": "dist/index.js",
     "scripts": {
-        "prepack": "rm -f tsconfig.tsbuildinfo && rm -rf dist && tsc"
+        "prepack": "rm -rf dist && tsc"
     },
     "devDependencies": {
         "full-package": "file:full-package-0.0.0.tgz"
