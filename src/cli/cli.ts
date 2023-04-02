@@ -81,16 +81,19 @@ export async function cli({
 
     Object.assign(process.env, jsonNewEnv);
 
-    if (testCommand) {
-        await runShellCommand(testCommand, {
-            cwd: repoDirPath,
-            rejectOnError: true,
-            hookUpToConsole: true,
-        });
-    }
+    const commandResults = testCommand
+        ? await runShellCommand(testCommand, {
+              cwd: repoDirPath,
+              hookUpToConsole: true,
+          })
+        : undefined;
 
     if (!skipUninstall) {
         await uninstallSelf(repoDirPath);
+    }
+
+    if (commandResults && commandResults.exitCode !== 0) {
+        process.exit(commandResults.exitCode);
     }
 
     return jsonNewEnv;
