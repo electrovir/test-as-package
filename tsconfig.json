@@ -1,5 +1,4 @@
 {
-    "extends": "./node_modules/virmator/base-configs/base-tsconfig.json",
     "compilerOptions": {
         "outDir": "./dist",
         "rootDir": "./src"
@@ -9,5 +8,6 @@
         "./dist/",
         "./node_modules/",
         "./test-files/"
-    ]
+    ],
+    "extends": "./node_modules/virmator/base-configs/tsconfig.base.json"
 }

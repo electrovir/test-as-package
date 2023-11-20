@@ -1,4 +1,4 @@
-import {extractErrorMessage, isRuntimeTypeOf, parseJson} from '@augment-vir/common';
+import {extractErrorMessage, parseJson} from '@augment-vir/common';
 import {
     RunShellCommandParams,
     ShellOutput,
@@ -6,6 +6,7 @@ import {
     runShellCommand,
 } from '@augment-vir/node-js';
 import {join, relative} from 'path';
+import {isRunTimeType} from 'run-time-assertions';
 import {
     packageBeingTestedBinNames,
     packageBeingTestedInstallationBinDirPath,
@@ -84,7 +85,7 @@ function readEnvVar<ReturnGeneric>(
         },
     });
 
-    if (isRuntimeTypeOf(parsedValue, 'array')) {
+    if (isRunTimeType(parsedValue, 'array')) {
         if (!parsedValue.length) {
             throw new Error(
                 `Parsed an array from env variable '${envVar}' but it was an empty array.`,

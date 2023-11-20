@@ -1,7 +1,6 @@
 import {mapObjectValues, parseJson} from '@augment-vir/common';
 import {ShellOutput, toPosixPath} from '@augment-vir/node-js';
-import chai, {assert} from 'chai';
-import chaiAsPromised from 'chai-as-promised';
+import {assertThrows} from 'run-time-assertions';
 import {expectationCases} from 'test-established-expectations';
 import {cli} from '../cli/cli';
 import {repoRootDirPath, testRepoDirPaths} from '../test-file-paths.test-helper';
@@ -47,8 +46,7 @@ async function testRunCurrentPackageCli(inputs: NonNullable<Parameters<typeof ru
 
 describe(runPackageCli.name, () => {
     it('errors if no env variables were set', async () => {
-        chai.use(chaiAsPromised);
-        await assert.isRejected(runPackageCli());
+        await assertThrows(() => runPackageCli());
     });
 
     expectationCases(
