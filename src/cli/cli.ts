@@ -1,16 +1,16 @@
 #!/usr/bin/env node
 
-import {mapObjectValues, PartialAndUndefined} from '@augment-vir/common';
-import {runShellCommand} from '@augment-vir/node-js';
-import {join} from 'path';
+import {mapObjectValues, PartialWithUndefined} from '@augment-vir/common';
+import {runShellCommand} from '@augment-vir/node';
+import {join} from 'node:path';
 import {
     packageBeingTestedBinNames,
     packageBeingTestedInstallationBinDirPath,
-} from '../package-being-tested-env-names';
-import {testAsPackageBinName} from '../test-as-package-bin-name';
-import {extractBinNames} from './extract-bin-names';
-import {packPackage} from './pack-package';
-import {installTar, uninstallSelf} from './package-installation';
+} from '../package-being-tested-env-names.js';
+import {testAsPackageBinName} from '../test-as-package-bin-name.js';
+import {extractBinNames} from './extract-bin-names.js';
+import {packPackage} from './pack-package.js';
+import {installTar, uninstallSelf} from './package-installation.js';
 
 const flags = ['--bypass-install'];
 
@@ -56,7 +56,7 @@ export async function cli({
     cwd: repoDirPath = process.cwd(),
     args = process.argv,
     skipUninstall = false,
-}: PartialAndUndefined<{
+}: PartialWithUndefined<{
     cwd: string;
     args: string[];
     skipUninstall: boolean;
@@ -97,8 +97,4 @@ export async function cli({
     }
 
     return jsonNewEnv;
-}
-
-if (require.main === module) {
-    cli();
 }

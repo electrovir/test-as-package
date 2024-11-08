@@ -1,9 +1,9 @@
-import {itCases} from '@augment-vir/chai';
-import {assert} from 'chai';
-import {existsSync} from 'fs';
-import {join} from 'path';
-import {testRepoDirPaths} from '../test-file-paths.test-helper';
-import {packPackage} from './pack-package';
+import {assert} from '@augment-vir/assert';
+import {describe, itCases} from '@augment-vir/test';
+import {existsSync} from 'node:fs';
+import {join} from 'node:path';
+import {testRepoDirPaths} from '../test-file-paths.test-helper.js';
+import {packPackage} from './pack-package.js';
 
 describe(packPackage.name, () => {
     itCases(

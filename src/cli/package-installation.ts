@@ -1,5 +1,5 @@
-import {readPackageJson, runShellCommand} from '@augment-vir/node-js';
-import {getPackageName} from './package-name';
+import {readPackageJson, runShellCommand} from '@augment-vir/node';
+import {getPackageName} from './package-name.js';
 
 export async function installTar({
     tarPath,

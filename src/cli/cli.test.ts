@@ -1,8 +1,8 @@
-import {toPosixPath} from '@augment-vir/node-js';
-import {expectationCases} from 'test-established-expectations';
-import {packageBeingTestedInstallationBinDirPath} from '../package-being-tested-env-names';
-import {repoRootDirPath, testRepoDirPaths} from '../test-file-paths.test-helper';
-import {cli} from './cli';
+import {toPosixPath} from '@augment-vir/node';
+import {describe, snapshotCases} from '@augment-vir/test';
+import {packageBeingTestedInstallationBinDirPath} from '../package-being-tested-env-names.js';
+import {repoRootDirPath, testRepoDirPaths} from '../test-file-paths.test-helper.js';
+import {cli} from './cli.js';
 
 function sanitizeOutput(output: Awaited<ReturnType<typeof cli>>): Awaited<ReturnType<typeof cli>> {
     return {
@@ -29,7 +29,7 @@ async function testCli(cwd: NonNullable<Parameters<typeof cli>[0]>['cwd']) {
 }
 
 describe(cli.name, () => {
-    expectationCases(testCli, [
+    snapshotCases(testCli, [
         {
             it: 'sets env variables',
             input: testRepoDirPaths.fakePackage,

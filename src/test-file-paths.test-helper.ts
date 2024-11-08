@@ -1,6 +1,6 @@
-import {dirname, join} from 'path';
+import {dirname, join} from 'node:path';
 
-export const repoRootDirPath = dirname(dirname(__filename));
+export const repoRootDirPath = dirname(dirname(import.meta.filename));
 
 const testFilesDirPath = join(repoRootDirPath, 'test-files');
 

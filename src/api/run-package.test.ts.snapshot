@@ -1,0 +1,11 @@
+exports[`runPackageCli > returns errors 1`] = `
+"{\\"TEST-AS-PACKAGE-BIN-NAMES\\":\\"[\\\\\\"full-package\\\\\\"]\\",\\"TEST-AS-PACKAGE-INSTALLATION-BIN-DIR-PATH\\":\\"\\\\\\"./test-files/full-package/node_modules/.bin\\\\\\"\\",\\"stdout\\":\\"\\",\\"stderr\\":\\"throw error, this will, throw an error\\\\n\\",\\"exitCode\\":1}"
+`;
+
+exports[`runPackageCli > runs the package when args are not provided 1`] = `
+"{\\"TEST-AS-PACKAGE-BIN-NAMES\\":\\"[\\\\\\"full-package\\\\\\"]\\",\\"TEST-AS-PACKAGE-INSTALLATION-BIN-DIR-PATH\\":\\"\\\\\\"./test-files/full-package/node_modules/.bin\\\\\\"\\",\\"stdout\\":\\"[]\\\\n\\",\\"stderr\\":\\"\\",\\"exitCode\\":0}"
+`;
+
+exports[`runPackageCli > runs with arguments 1`] = `
+"{\\"TEST-AS-PACKAGE-BIN-NAMES\\":\\"[\\\\\\"full-package\\\\\\"]\\",\\"TEST-AS-PACKAGE-INSTALLATION-BIN-DIR-PATH\\":\\"\\\\\\"./test-files/full-package/node_modules/.bin\\\\\\"\\",\\"stdout\\":\\"[ \\\\u001b[32m'hello'\\\\u001b[39m, \\\\u001b[32m'there'\\\\u001b[39m, \\\\u001b[32m'there are arguments'\\\\u001b[39m ]\\\\n\\",\\"stderr\\":\\"\\",\\"exitCode\\":0}"
+`;

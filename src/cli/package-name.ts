@@ -1,4 +1,4 @@
-import {runShellCommand} from '@augment-vir/node-js';
+import {runShellCommand} from '@augment-vir/node';
 
 export async function getPackageName(repoDirPath: string): Promise<string> {
     const packageName = (

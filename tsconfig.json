@@ -1,13 +1,16 @@
 {
     "compilerOptions": {
-        "outDir": "./dist",
-        "rootDir": "./src"
+        "outDir": "./dist/",
+        "rootDir": "./src/"
     },
     "exclude": [
         "./configs/",
+        "./coverage/",
+        "./dist-*/",
         "./dist/",
         "./node_modules/",
-        "./test-files/"
+        "./test-files/",
+        "src/all-files-for-code-coverage.test.ts"
     ],
-    "extends": "./node_modules/virmator/base-configs/tsconfig.base.json"
+    "extends": "@virmator/compile/configs/tsconfig.base.json"
 }

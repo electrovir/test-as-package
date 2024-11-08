@@ -1,9 +1,8 @@
-import {FunctionTestCase, itCases} from '@augment-vir/chai';
-import {describe} from 'mocha';
-import {testRepoDirPaths} from '../test-file-paths.test-helper';
-import {getPackageName} from './package-name';
+import {describe, itCases, type FunctionTestCase} from '@augment-vir/test';
+import {testRepoDirPaths} from '../test-file-paths.test-helper.js';
+import {getPackageName} from './package-name.js';
 
-describe(getPackageName.name, async () => {
+describe(getPackageName.name, () => {
     describe('should produce correct outputs for', () => {
         itCases(
             getPackageName,

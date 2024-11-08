@@ -1,19 +1,16 @@
-import {mapObjectValues, parseJson} from '@augment-vir/common';
-import {ShellOutput, toPosixPath} from '@augment-vir/node-js';
-import {assertThrows} from 'run-time-assertions';
-import {expectationCases} from 'test-established-expectations';
-import {cli} from '../cli/cli';
-import {repoRootDirPath, testRepoDirPaths} from '../test-file-paths.test-helper';
-import {runPackageCli} from './run-package';
+import {assert} from '@augment-vir/assert';
+import {mapObjectValues, wrapInTry} from '@augment-vir/common';
+import {ShellOutput, toPosixPath} from '@augment-vir/node';
+import {describe, it, snapshotCases} from '@augment-vir/test';
+import {cli} from '../cli/cli.js';
+import {repoRootDirPath, testRepoDirPaths} from '../test-file-paths.test-helper.js';
+import {runPackageCli} from './run-package.js';
 
 function sanitizeOutput<OutputGeneric extends object>(output: OutputGeneric): OutputGeneric {
     return mapObjectValues(output, (key, value) => {
         if (typeof value === 'string') {
-            const parsedValue = parseJson<string | undefined>({
-                jsonString: value,
-                errorHandler: () => {
-                    return undefined;
-                },
+            const parsedValue: unknown = wrapInTry(() => JSON.parse(value), {
+                fallbackValue: undefined,
             });
             if (typeof parsedValue === 'string' && parsedValue) {
                 return JSON.stringify(
@@ -46,43 +43,37 @@ async function testRunCurrentPackageCli(inputs: NonNullable<Parameters<typeof ru
 
 describe(runPackageCli.name, () => {
     it('errors if no env variables were set', async () => {
-        await assertThrows(() => runPackageCli());
+        await assert.throws(() => runPackageCli());
     });
 
-    expectationCases(
-        testRunCurrentPackageCli,
+    snapshotCases(testRunCurrentPackageCli, [
         {
-            testKey: runPackageCli.name,
+            it: 'runs the package when args are not provided',
+            input: {
+                cwd: testRepoDirPaths.fullPackage,
+            },
         },
-        [
-            {
-                it: 'runs the package when args are not provided',
-                input: {
-                    cwd: testRepoDirPaths.fullPackage,
-                },
+        {
+            it: 'runs with arguments',
+            input: {
+                commandArgs: [
+                    'hello',
+                    'there',
+                    'there are arguments',
+                ],
+                cwd: testRepoDirPaths.fullPackage,
             },
-            {
-                it: 'runs with arguments',
-                input: {
-                    commandArgs: [
-                        'hello',
-                        'there',
-                        'there are arguments',
-                    ],
-                    cwd: testRepoDirPaths.fullPackage,
-                },
+        },
+        {
+            it: 'returns errors',
+            input: {
+                commandArgs: [
+                    'throw error',
+                    'this will',
+                    'throw an error',
+                ],
+                cwd: testRepoDirPaths.fullPackage,
             },
-            {
-                it: 'returns errors',
-                input: {
-                    commandArgs: [
-                        'throw error',
-                        'this will',
-                        'throw an error',
-                    ],
-                    cwd: testRepoDirPaths.fullPackage,
-                },
-            },
-        ],
-    );
+        },
+    ]);
 });

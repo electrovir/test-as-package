@@ -41,7 +41,8 @@ To actually test your package's CLi, use `runPackageCli` inside of tests:
 <!-- example-link: src/readme-examples/run-package-output.example.ts -->
 
 ```TypeScript
-import {assert} from 'chai';
+import {assert} from '@augment-vir/assert';
+import {describe, it} from '@augment-vir/test';
 import {runPackageCli} from 'test-as-package';
 
 describe('my CLI', () => {
@@ -51,7 +52,7 @@ describe('my CLI', () => {
         });
 
         // assert that the command exited without any errors
-        assert.strictEqual(cliOutputs.exitCode, 0);
+        assert.strictEquals(cliOutputs.exitCode, 0);
     });
 });
 ```

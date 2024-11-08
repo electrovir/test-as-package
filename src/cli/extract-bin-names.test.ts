@@ -1,6 +1,6 @@
-import {itCases} from '@augment-vir/chai';
-import {testRepoDirPaths} from '../test-file-paths.test-helper';
-import {extractBinNames} from './extract-bin-names';
+import {describe, itCases} from '@augment-vir/test';
+import {testRepoDirPaths} from '../test-file-paths.test-helper.js';
+import {extractBinNames} from './extract-bin-names.js';
 
 describe(extractBinNames.name, () => {
     itCases(extractBinNames, [

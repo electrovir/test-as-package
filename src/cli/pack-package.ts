@@ -1,6 +1,6 @@
-import {isTruthy} from '@augment-vir/common';
-import {runShellCommand} from '@augment-vir/node-js';
-import {join} from 'path';
+import {check} from '@augment-vir/assert';
+import {runShellCommand} from '@augment-vir/node';
+import {join} from 'node:path';
 
 export async function packPackage(packageDirPath: string): Promise<string> {
     const packShellResults = await runShellCommand('npm pack', {
@@ -9,7 +9,7 @@ export async function packPackage(packageDirPath: string): Promise<string> {
         hookUpToConsole: true,
     });
 
-    const packOutputLines = packShellResults.stdout.trim().split('\n').filter(isTruthy);
+    const packOutputLines = packShellResults.stdout.trim().split('\n').filter(check.isTruthy);
     const tarFileName = packOutputLines.slice(-1)[0];
 
     if (!tarFileName) {

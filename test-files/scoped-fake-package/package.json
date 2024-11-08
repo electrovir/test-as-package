@@ -2,6 +2,7 @@
     "name": "@electrovir/scoped-fake-package",
     "version": "0.0.0",
     "private": true,
+    "type": "module",
     "main": "dist/index.js",
     "bin": "dist/index.js",
     "scripts": {

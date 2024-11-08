@@ -1,5 +1,6 @@
-import {assert} from 'chai';
-import {runPackageCli} from '../api/api';
+import {assert} from '@augment-vir/assert';
+import {describe, it} from '@augment-vir/test';
+import {runPackageCli} from '../index.js';
 
 describe('my CLI', () => {
     it('produces correct output', async () => {
@@ -8,6 +9,6 @@ describe('my CLI', () => {
         });
 
         // assert that the command exited without any errors
-        assert.strictEqual(cliOutputs.exitCode, 0);
+        assert.strictEquals(cliOutputs.exitCode, 0);
     });
 });
