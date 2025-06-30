@@ -1,7 +1,7 @@
 import {check} from '@augment-vir/assert';
 import {readFile} from 'node:fs/promises';
 import {join} from 'node:path';
-import {PackageJson} from 'type-fest';
+import {type PackageJson} from 'type-fest';
 import {getPackageName} from './package-name.js';
 
 export async function extractBinNames(repoDirPath: string): Promise<string[]> {

@@ -1,10 +1,10 @@
 import {check} from '@augment-vir/assert';
 import {extractErrorMessage, wrapInTry} from '@augment-vir/common';
 import {
-    ShellOutput,
     interpolationSafeWindowsPath,
     runShellCommand,
     type RunShellCommandOptions,
+    type ShellOutput,
 } from '@augment-vir/node';
 import {join, relative} from 'node:path';
 import {defineShape, parseJsonWithShape, type ShapeDefinition} from 'object-shape-tester';

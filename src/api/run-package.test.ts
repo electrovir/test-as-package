@@ -1,6 +1,6 @@
 import {assert} from '@augment-vir/assert';
 import {mapObjectValues, wrapInTry} from '@augment-vir/common';
-import {ShellOutput, toPosixPath} from '@augment-vir/node';
+import {type ShellOutput, toPosixPath} from '@augment-vir/node';
 import {describe, it, snapshotCases} from '@augment-vir/test';
 import {cli} from '../cli/cli.js';
 import {repoRootDirPath, testRepoDirPaths} from '../test-file-paths.test-helper.js';

@@ -1,4 +1,4 @@
-import {mapObjectValues, PartialWithUndefined} from '@augment-vir/common';
+import {mapObjectValues, type PartialWithUndefined} from '@augment-vir/common';
 import {runShellCommand} from '@augment-vir/node';
 import {join} from 'node:path';
 import {
