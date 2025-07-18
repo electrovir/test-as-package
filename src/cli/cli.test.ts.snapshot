@@ -1,11 +1,11 @@
 exports[`cli > sets env variables 1`] = `
-"{\\"TEST-AS-PACKAGE-BIN-NAMES\\":\\"[]\\",\\"TEST-AS-PACKAGE-INSTALLATION-BIN-DIR-PATH\\":\\"\\\\\\"./test-files/fake-package/node_modules/.bin\\\\\\"\\"}"
+"{\\"TEST_AS_PACKAGE_BIN_NAMES\\":\\"[]\\",\\"TEST_AS_PACKAGE_INSTALLATION_BIN_DIR_PATH\\":\\"\\\\\\"./test-files/fake-package/node_modules/.bin\\\\\\"\\"}"
 `;
 
 exports[`cli > sets full package's env variables 1`] = `
-"{\\"TEST-AS-PACKAGE-BIN-NAMES\\":\\"[\\\\\\"full-package\\\\\\"]\\",\\"TEST-AS-PACKAGE-INSTALLATION-BIN-DIR-PATH\\":\\"\\\\\\"./test-files/full-package/node_modules/.bin\\\\\\"\\"}"
+"{\\"TEST_AS_PACKAGE_BIN_NAMES\\":\\"[\\\\\\"full-package\\\\\\"]\\",\\"TEST_AS_PACKAGE_INSTALLATION_BIN_DIR_PATH\\":\\"\\\\\\"./test-files/full-package/node_modules/.bin\\\\\\"\\"}"
 `;
 
 exports[`cli > sets multiple bin env variables 1`] = `
-"{\\"TEST-AS-PACKAGE-BIN-NAMES\\":\\"[\\\\\\"bin1\\\\\\",\\\\\\"bin2\\\\\\"]\\",\\"TEST-AS-PACKAGE-INSTALLATION-BIN-DIR-PATH\\":\\"\\\\\\"./test-files/multiple-bins-fake-package/node_modules/.bin\\\\\\"\\"}"
+"{\\"TEST_AS_PACKAGE_BIN_NAMES\\":\\"[\\\\\\"bin1\\\\\\",\\\\\\"bin2\\\\\\"]\\",\\"TEST_AS_PACKAGE_INSTALLATION_BIN_DIR_PATH\\":\\"\\\\\\"./test-files/multiple-bins-fake-package/node_modules/.bin\\\\\\"\\"}"
 `;
