@@ -7,7 +7,7 @@ import {
     type ShellOutput,
 } from '@augment-vir/node';
 import {join, relative} from 'node:path';
-import {defineShape, parseJsonWithShape, type ShapeDefinition} from 'object-shape-tester';
+import {defineShape, parseJsonWithShape, type Shape} from 'object-shape-tester';
 import {
     packageBeingTestedBinNames,
     packageBeingTestedInstallationBinDirPath,
@@ -68,10 +68,10 @@ export async function runPackageCli(
     return shellOutput;
 }
 
-function readEnvVar<Shape>(
+function readEnvVar<T>(
     envVar: typeof packageBeingTestedBinNames | typeof packageBeingTestedInstallationBinDirPath,
-    shapeMatcher: Shape,
-): ShapeDefinition<Shape, false>['runtimeType'] {
+    shapeMatcher: T,
+): Shape<T>['runtimeType'] {
     const rawEnvValue = process.env[envVar];
     const failureMessage = `It should have been set by the '${testAsPackageBinName}' cli. Make sure to use that CLI to run tests`;
 
@@ -79,7 +79,7 @@ function readEnvVar<Shape>(
         throw new Error(`Failed to read '${envVar}' env variable: ${failureMessage}`);
     }
 
-    const parsedValue = wrapInTry(
+    const parsedValue = wrapInTry<unknown>(
         () => parseJsonWithShape(rawEnvValue, defineShape(shapeMatcher)),
         {
             handleError(error) {
